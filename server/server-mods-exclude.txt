@@ -1,0 +1,13 @@
+# Client-only mods to REMOVE from a dedicated server (crash / useless server-side).
+# Matched as filename substrings. (From the jar-verified mod triage.)
+ArmorStatusHUD
+IngameInfo
+InventoryTweaks
+LumySkinPatch
+NEIPlugins
+neiaddons
+WikiLink
+# Optional drops (server-safe but diagnostics/telemetry, not gameplay):
+OpenEye
+Opis_
+MobiusCore

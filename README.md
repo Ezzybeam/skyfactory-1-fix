@@ -1,4 +1,4 @@
-# SkyFactory 1.3.2 — Easy Launcher
+# SkyFactory 1 — Fix, Launcher & Server
 
 Get the classic **SkyFactory 1** (SkyFactory 1.3.2, Minecraft **1.6.4** + Forge)
 running on a modern machine. It's an old pack and today's launchers mishandle its
@@ -30,7 +30,7 @@ external drives or accounts needed beyond your Minecraft/Microsoft login.
 
 ### macOS ✅
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Ezzybeam/skyfactory-1.3.2-launcher/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Ezzybeam/skyfactory-1-fix/main/install.sh | bash
 ```
 Then in Modrinth: **Add Instance → From file →** the downloaded
 `~/Downloads/SkyFactory-1.3.2.mrpack` → **Play**. (Full steps:
@@ -50,6 +50,11 @@ software OpenGL.)
 ### Performance ⚡
 The pack has no optimization mods. For a big FPS boost (OptiFine + FastCraft) and
 tuned JVM/GC args, see [`docs/optimize.md`](docs/optimize.md).
+
+### Host a server 🖥️
+Want to play with friends? Set up a dedicated server (Forge 1.6.4, void world, built
+from the same pack) with `server/setup-server.sh` (Mac/Linux) or
+`server/setup-server.bat` (Windows) — see [`server/`](server/).
 
 ### Updating 🔄
 Both installers pull from the **latest** release, so **just run the installer again**

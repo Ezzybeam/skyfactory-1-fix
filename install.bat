@@ -6,7 +6,7 @@ REM  applies the launchwrapper fix, and opens Modrinth.
 REM  Windows: WORK IN PROGRESS (see notes at the end).
 REM ============================================================
 setlocal
-set "REPO=Ezzybeam/skyfactory-1.3.2-launcher"
+set "REPO=Ezzybeam/skyfactory-1-fix"
 set "PACK_URL=https://github.com/%REPO%/releases/latest/download/SkyFactory-1.3.2.mrpack"
 set "DEST=%USERPROFILE%\Downloads\SkyFactory-1.3.2.mrpack"
 set "LOG=%USERPROFILE%\Downloads\skyfactory-install-log.txt"

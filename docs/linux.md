@@ -8,7 +8,7 @@ report** if you try it.
 
 ## Steps (Modrinth)
 
-1. Get the repo: `git clone https://github.com/Ezzybeam/skyfactory-1.3.2-launcher`
+1. Get the repo: `git clone https://github.com/Ezzybeam/skyfactory-1-fix`
    (or Download ZIP).
 2. Download the pack + open Modrinth:
    ```bash

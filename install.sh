@@ -4,7 +4,7 @@
 # Re-run any time to UPDATE (it always fetches the latest). macOS: WORKING.
 set -euo pipefail
 
-REPO="Ezzybeam/skyfactory-1.3.2-launcher"
+REPO="Ezzybeam/skyfactory-1-fix"
 PACK_URL="https://github.com/$REPO/releases/latest/download/SkyFactory-1.3.2.mrpack"
 DEST="$HOME/Downloads/SkyFactory-1.3.2.mrpack"
 LOG="$HOME/Downloads/skyfactory-install-log.txt"

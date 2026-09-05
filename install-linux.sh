@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SkyFactory 1.3.2 - Linux installer (Modrinth). UNTESTED - should work; please report.
 set -euo pipefail
-REPO="Ezzybeam/skyfactory-1.3.2-launcher"
+REPO="Ezzybeam/skyfactory-1-fix"
 PACK_URL="https://github.com/$REPO/releases/latest/download/SkyFactory-1.3.2.mrpack"
 DEST="$HOME/Downloads/SkyFactory-1.3.2.mrpack"
 mkdir -p "$HOME/Downloads"

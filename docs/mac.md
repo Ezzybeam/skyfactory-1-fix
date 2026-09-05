@@ -5,7 +5,7 @@ Status: **working** (Apple Silicon and Intel).
 ## One command
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Ezzybeam/skyfactory-1.3.2-launcher/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Ezzybeam/skyfactory-1-fix/main/install.sh | bash
 ```
 
 This downloads `SkyFactory-1.3.2.mrpack` to `~/Downloads`, opens **Modrinth App**,
