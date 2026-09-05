@@ -35,6 +35,10 @@ Download this repo (green **Code → Download ZIP**, or `git clone`), then doubl
 Not tested yet. It should work through Modrinth (or Prism) the same way macOS does —
 if you get it going, please [open a PR](docs/linux.md).
 
+### Performance ⚡
+The pack has no optimization mods. For a big FPS boost (OptiFine + FastCraft) and
+tuned JVM/GC args, see [`docs/optimize.md`](docs/optimize.md).
+
 ### Updating 🔄
 Both installers pull from the **latest** release, so **just run the installer again**
 to update — it re-downloads the newest pack and re-applies the fix. Then re-import
