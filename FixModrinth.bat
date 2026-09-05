@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 title SkyFactory - Modrinth Windows fix
 echo === SkyFactory 1.3.2 - Modrinth Windows fix ===
 echo.
@@ -16,6 +17,14 @@ robocopy "%~dp0lwjgl-fix" "%LIB%" /E /NFL /NDL /NJH /NJS /R:1 /W:1 >nul
 echo [2/3] Installing native DLLs to  %NAT%
 mkdir "%NAT%" 2>nul
 robocopy "%~dp0natives-windows" "%NAT%" /E /NFL /NDL /NJH /NJS /R:1 /W:1 >nul
+REM self-heal: if natives-windows wasn't next to this .bat, download the DLLs from GitHub
+if not exist "%NAT%\lwjgl64.dll" (
+  echo     natives folder was missing - downloading DLLs from GitHub...
+  set "RAW=https://raw.githubusercontent.com/Ezzybeam/skyfactory-1-fix/main/natives-windows"
+  for %%D in (lwjgl.dll lwjgl64.dll OpenAL32.dll OpenAL64.dll jinput-dx8.dll jinput-dx8_64.dll jinput-raw.dll jinput-raw_64.dll jinput-wintab.dll) do (
+    curl -L --fail -o "%NAT%\%%D" "!RAW!/%%D" 2>nul || powershell -NoProfile -Command "iwr '!RAW!/%%D' -OutFile '%NAT%\%%D'"
+  )
+)
 
 echo [3/3] Placing patched launchwrapper...
 mkdir "%LIB%\net\minecraft\launchwrapper\1.8" 2>nul
