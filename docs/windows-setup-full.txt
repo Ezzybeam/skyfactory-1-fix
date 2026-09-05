@@ -1,0 +1,165 @@
+========================================
+  Sky Factory 1.3.2 — Windows Setup Guide
+  (Prism Launcher — fixes LWJGL on Windows)
+========================================
+
+FILES YOU NEED:
+  1. SkyFactory-1.3.2.mrpack  (the modpack — includes skin fix AND launch fix)
+  2. This file
+
+WHY PRISM LAUNCHER?
+  Modrinth App does not set up LWJGL native libraries correctly for
+  Minecraft 1.6.4 on Windows, causing an instant crash.
+  Prism Launcher handles this automatically and is the recommended
+  launcher for old Minecraft versions.
+
+----------------------------------------
+STEP 1 – Install Prism Launcher
+----------------------------------------
+  → Download from: https://prismlauncher.org/download/
+  → Install and open it.
+
+  First-time setup:
+    a. Click "Microsoft Login" and sign in with your Microsoft/Xbox account
+       (same account you use to play Minecraft).
+    b. When asked about Java, click "Auto-detect" or let Prism download
+       Java 8 automatically — it will handle this for you.
+
+----------------------------------------
+STEP 2 – Import the modpack
+----------------------------------------
+  1. In Prism click "Add Instance" (top-left button)
+  2. In the left panel, select "Import"
+  3. Click "Browse" and select "SkyFactory-1.3.2.mrpack"
+  4. Click OK — Prism will import and download everything
+     (Minecraft 1.6.4, Forge, all mods — takes a few minutes)
+  ** DO NOT LAUNCH YET **
+
+----------------------------------------
+STEP 3 – Apply the launchwrapper fix
+----------------------------------------
+  (Fixes a rare ConcurrentModificationException crash on some PCs)
+
+  3a. In Prism, RIGHT-CLICK the Sky Factory instance
+      → Click "Launch" to start the game
+
+      The game will download its remaining files.
+      It may crash or show an error — that is EXPECTED.
+      If it opens all the way, close it. Either way, continue.
+
+  3b. Now RIGHT-CLICK the instance again
+      → Click "Minecraft Folder" to open the instance's game folder
+
+  3c. Double-click "FixLaunch.bat" in that folder
+      You'll see: "Patched launchwrapper installed." — then close it
+
+  If you get an error from FixLaunch.bat, make sure you did step 3a
+  first (the game must download its files before the bat will work).
+
+----------------------------------------
+STEP 4 – Add the FML bypass JVM flags
+----------------------------------------
+  (Fixes a silent crash where Forge thinks Minecraft is "corrupted")
+
+  4a. In Prism, RIGHT-CLICK the Sky Factory instance
+      → Click "Edit"
+
+  4b. Go to the "Settings" tab, then tick "Java installation" checkbox
+      OR look for a "JVM Arguments" / "Java" section
+
+  4c. Find the "JVM Arguments" or "Additional JVM arguments" field
+      Add these two flags (paste them):
+        -Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true
+
+  4d. Click Close / Save
+
+----------------------------------------
+STEP 5 – Performance boost (LOW-END PCs)
+----------------------------------------
+  Skip this step if your PC runs games fine.
+  If you get low FPS or bad lag, do this BEFORE launching.
+
+  5a. Download these two free mods:
+
+      OptiFine (major FPS boost):
+        → Go to: https://optifine.net/adloadx?f=OptiFine_1.6.4_HD_U_C2.jar
+        → Click the download button on the page
+        → Save the file
+
+      FastCraft (reduces lag spikes):
+        → Go to: https://www.curseforge.com/minecraft/mc-mods/fastcraft/files/2305171
+        → Click Download
+        → Save the file
+
+  5b. Drop both .jar files into your mods folder:
+        Right-click the Sky Factory instance → "Minecraft Folder"
+        → open the "mods" folder inside
+        → paste the two jars in there
+
+  5c. In Prism, right-click the instance → Edit → Settings tab
+      Set Memory: Min 512 MB, Max 2048 MB (2 GB)
+      Don't give it more than half your total RAM.
+
+      In the JVM arguments field, REPLACE what you put in Step 4 with:
+        -Xmx2G -Xms512M -XX:+UseG1GC -XX:+UnlockExperimentalVMOptions
+        -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20
+        -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=16M
+        -Dfml.ignoreInvalidMinecraftCertificates=true
+        -Dfml.ignorePatchDiscrepancies=true
+
+  5d. Once in-game, go to Options → Video Settings:
+        Render Distance:  Short (4) or Tiny (2)
+        Graphics:         Fast
+        Smooth Lighting:  Off
+        Particles:        Minimal
+        Performance:      Max FPS
+
+----------------------------------------
+STEP 6 – Launch!
+----------------------------------------
+  Double-click (or right-click → Launch) the Sky Factory instance.
+  The game should load all the way to the main menu.
+  Skins will work automatically — no extra setup needed.
+
+----------------------------------------
+TROUBLESHOOTING
+----------------------------------------
+
+"no lwjgl in java.library.path" crash:
+  → This happens in Modrinth App. Use Prism Launcher (Step 1).
+  → If you're already using Prism, make sure Java 8 is selected:
+      Right-click instance → Edit → Java tab → select Java 8
+
+Game quits instantly with no error window:
+  → You probably missed Step 4 (the JVM flags)
+  → Double-check both flags are added with no typos
+
+Still crashes with "ConcurrentModificationException":
+  → Re-run FixLaunch.bat from the Minecraft Folder (Step 3b-3c)
+
+"Unable to read the jar file ... - ignoring" in log:
+  → These are harmless SEVERE warnings from FML — ignore them.
+  → The game will still load normally.
+
+Any other crash — send the log file:
+  Right-click instance → Minecraft Folder
+  → logs → look for "ForgeModLoader-client-0.log"
+  → or: right-click instance → "View logs"
+
+Skins not showing:
+  → The mrpack includes LumySkinPatch which fixes skins automatically
+  → Make sure you imported the mrpack correctly (Step 2)
+  → Try relaunching the game
+
+----------------------------------------
+PATCHED JAR INFO
+  Original sha1:  d4c0895977dd7f0b3f56281cee53a64d4c0c0322
+  Patched sha1:   f1408d08c04be0a1cd1bd1a73cc11a9e210bdba7
+  Patched size:   28799 bytes
+
+----------------------------------------
+SKIN FIX INFO
+  LumySkinPatch-1.0.13.jar is bundled inside the mrpack.
+  It patches MC 1.6.4 to use the modern Mojang UUID API
+  for skin loading. Works automatically, no configuration needed.
+========================================
