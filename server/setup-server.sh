@@ -56,7 +56,7 @@ fi
 echo "==> Writing server.properties (void skyblock, build-anywhere)..."
 cat > server.properties <<PROP
 level-name=skyworld
-level-type=DEFAULT
+level-type=void
 online-mode=true
 gamemode=0
 difficulty=2

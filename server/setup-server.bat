@@ -42,7 +42,7 @@ if exist "%LIBSRC%" (
 echo ==^> Writing server.properties...
 (
 echo level-name=skyworld
-echo level-type=DEFAULT
+echo level-type=void
 echo online-mode=true
 echo gamemode=0
 echo difficulty=2

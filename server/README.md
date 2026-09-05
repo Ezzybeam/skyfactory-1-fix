@@ -47,15 +47,17 @@ Then connect from the SkyFactory client (installed with this repo's launcher) to
 
 | Setting | Value | Why |
 |---|---|---|
-| `level-type` | `DEFAULT` | YUNoMakeGoodMap intercepts the default generator to make the void |
+| `level-type` | `void` | selects YUNoMakeGoodMap's void generator directly (reliable; `DEFAULT`+override is flaky) |
 | `level-name` | `skyworld` | fresh name → the void generates on first boot |
 | `spawn-protection` | `0` | the skyblock **is** spawn — players must build/break there |
 | `allow-flight` | `true` | avoids "flying is not enabled" kicks in the void |
 | `online-mode` | `true` | real accounts; set `false` only for cracked/bots |
 
-> **Void world gotcha:** YUNoMakeGoodMap only makes a world void on **first
-> generation**. If you get normal terrain, change `level-name` (or delete the world)
-> and reboot — the override must be present when the world is first created (it is).
+> **Void world gotcha:** use `level-type=void` (not `DEFAULT`). The `DEFAULT`+
+> `overrideDefault` route is unreliable — it can leave you with normal terrain (a
+> world whose `generatorName` is `default`). `level-type=void` makes the world's
+> `generatorName=void`, i.e. YUNoMakeGoodMap's real void generator. If you already
+> got terrain, delete the world (or change `level-name`) and reboot with `level-type=void`.
 
 ## Play with friends over the internet
 
