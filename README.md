@@ -9,7 +9,7 @@ running on a modern machine. It's an old pack and today's launchers mishandle it
 |----------|--------|-----------|
 | **macOS** | ✅ Working | `install.sh` |
 | **Windows** | ✅ Working (needs `FixModrinth.bat`) | `install.bat` + `FixModrinth.bat` |
-| **Linux** | ❓ Untested (help wanted) | see [`docs/linux.md`](docs/linux.md) |
+| **Linux** | ❓ Untested — should work | `install-linux.sh` + `FixModrinth-linux.sh` |
 
 Uses **Modrinth App** as the launcher. Everything downloads from this repo — no
 external drives or accounts needed beyond your Minecraft/Microsoft login.
@@ -33,8 +33,9 @@ full steps in [`docs/windows.md`](docs/windows.md). (Works on a real GPU; a VM n
 software OpenGL.)
 
 ### Linux ❓
-Not tested yet. It should work through Modrinth (or Prism) the same way macOS does —
-if you get it going, please [open a PR](docs/linux.md).
+**Untested, but should work** — the repo ships the Linux version of the Windows fix
+(same stubs, Linux `.so` natives). `./install-linux.sh` then `./FixModrinth-linux.sh`
+— see [`docs/linux.md`](docs/linux.md). Please report back if you try it!
 
 ### Performance ⚡
 The pack has no optimization mods. For a big FPS boost (OptiFine + FastCraft) and

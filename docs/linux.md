@@ -1,36 +1,51 @@
-# SkyFactory 1.3.2 on Linux ❓
+# SkyFactory 1.3.2 on Linux ❓ (untested — should work)
 
-Status: **untested.** No one has confirmed it yet — this is a best-guess based on how
-macOS works. **If you get it running, please open a PR** with your distro, launcher,
-and Java version.
+Status: **untested, but it should work.** Linux hits the *same* Modrinth 1.6.4 bugs
+as Windows (the natives-only base jars 404 for every OS, and Modrinth doesn't set the
+native path), and this repo now ships the Linux version of the fix — same approach,
+Linux `.so` natives. Nobody's confirmed it on a real Linux box yet, so **please
+report** if you try it.
 
-## Expected route (Modrinth or Prism)
+## Steps (Modrinth)
 
-Linux launchers ship the LWJGL 2.9.4 **Linux natives** (`.so`), so — like macOS — it
-should "just work" once the pack is imported.
-
-1. Install a launcher:
-   - **Modrinth App** — https://modrinth.com/app  (Flatpak/AppImage), or
-   - **Prism Launcher** — https://prismlauncher.org/download/ (recommended for old MC).
-2. Install **Java 8** (`temurin-8-jdk` / `openjdk-8-jre`), or let the launcher fetch it.
-3. Download the pack:
+1. Get the repo: `git clone https://github.com/Ezzybeam/skyfactory-1.3.2-launcher`
+   (or Download ZIP).
+2. Download the pack + open Modrinth:
    ```bash
-   curl -L -o ~/Downloads/SkyFactory-1.3.2.mrpack \
-     https://github.com/Ezzybeam/skyfactory-1.3.2-launcher/releases/latest/download/SkyFactory-1.3.2.mrpack
+   ./install-linux.sh
    ```
-4. Import it (**Add Instance → From file / Import**).
-5. Add the JVM args:
+3. Install/open **Modrinth App** (https://modrinth.com/app), sign in, and
+   **Add Instance → From file →** `~/Downloads/SkyFactory-1.3.2.mrpack`.
+   Let it install MC 1.6.4 + Forge + mods (Java 8 auto-downloaded). Launch once so
+   Modrinth creates its library folders (it'll fail — expected).
+4. Apply the fix:
+   ```bash
+   ./FixModrinth-linux.sh
    ```
-   -Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true
+   It places the LWJGL 2.9.0 + jInput 2.0.5 jars (with stub base jars), installs the
+   native `.so` files to `~/SkyFactory-natives`, and the patched launchwrapper. If it
+   can't find Modrinth's libraries folder, pass it:
+   `./FixModrinth-linux.sh /path/to/ModrinthApp/meta/libraries`
+5. In Modrinth → instance **Options / Java → JVM arguments**, paste what the script
+   prints:
    ```
-6. Launch.
+   -Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true -Dorg.lwjgl.librarypath=$HOME/SkyFactory-natives -Dnet.java.games.input.librarypath=$HOME/SkyFactory-natives
+   ```
+   Make sure the instance uses **Java 8**.
+6. **Play.**
+
+## Why it should work
+
+Same root cause as Windows: the 2.9.0 `lwjgl-platform` / `jinput-platform` base jars
+don't exist (natives-only), and Modrinth won't set `java.library.path`. The stub
+jars + `-Dorg.lwjgl.librarypath` / `-Dnet.java.games.input.librarypath` fix both.
+Linux has real OpenGL (native driver or Mesa), so unlike a GPU-less VM you should
+**not** hit "Pixel format not accelerated."
 
 ## Likely gotchas
 
-- **`no lwjgl in java.library.path`** — the same Modrinth 1.6.4 bug as Windows might
-  appear. If so, use Prism (it sets the native path), or run the equivalent of
-  `FixLaunch.bat` against `~/.local/share/PrismLauncher/libraries/net/minecraft/launchwrapper/1.8`.
-- Make sure the launcher is using **Java 8**, not a newer JDK — old Forge won't load
-  on 17/21.
-
-An `install.sh` for Linux would be welcome once the manual path is confirmed.
+- Flatpak Modrinth sandboxes its files under `~/.var/app/...` — the fix script
+  probes common paths; if it misses, pass the libraries path explicitly (step 4).
+- Ensure **Java 8** (not 17/21) — old Forge won't load otherwise.
+- If it still fails, grab the newest log under the instance's `logs/` folder and open
+  an issue.
