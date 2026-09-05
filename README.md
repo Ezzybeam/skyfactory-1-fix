@@ -5,6 +5,16 @@ running on a modern machine. It's an old pack and today's launchers mishandle it
 **LWJGL native libraries**, so it usually crashes on startup. This repo gives you a
 **one-command installer** plus the fix files.
 
+> **Been fighting to get SkyFactory 1 to launch and nothing works?** You're in the
+> right place. If you've seen any of these, this repo fixes them:
+> - `java.lang.UnsatisfiedLinkError: no lwjgl in java.library.path`
+> - `Could not canonicalize library path ... lwjgl-platform-2.9.0.jar` (or `jinput-platform-2.0.5.jar`)
+> - `org.lwjgl.LWJGLException: Pixel format not accelerated`
+> - `CRITICAL TAMPERING WITH MINECRAFT ... 0 certificates`
+> - the game just closes / no window ever opens
+>
+> It works on **macOS** and **Windows** (Modrinth), with a **Linux** fix too.
+
 | Platform | Status | Installer |
 |----------|--------|-----------|
 | **macOS** | ✅ Working | `install.sh` |
