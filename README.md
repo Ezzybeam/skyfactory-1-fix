@@ -67,8 +67,10 @@ The bundled JVM flags silence its effect:
 ## What's in this repo
 
 ```
-install.sh              macOS installer (downloads pack -> opens Modrinth)
-install.bat             Windows installer (downloads pack + fix -> opens Modrinth)
+install.sh              macOS installer/updater (downloads pack -> opens Modrinth)
+install.bat             Windows installer/updater (downloads pack + fix -> opens Modrinth)
+collect-log.sh          macOS: bundle the game crash log for sharing
+windows/CollectLog.bat  Windows: bundle the game crash log for sharing
 windows/FixLaunch.bat   copies the patched launchwrapper into Modrinth's libraries
 windows/launchwrapper-1.8.jar   patched launchwrapper (fixes a startup crash)
 docs/mac.md             macOS guide
@@ -76,6 +78,17 @@ docs/windows.md         Windows guide + WIP status
 docs/linux.md           Linux notes (untested)
 docs/windows-setup-full.txt   the detailed original setup notes
 ```
+
+## If it doesn't work (logs)
+
+The installers write their own run to `~/Downloads/skyfactory-install-log.txt`. To
+capture the actual **game** crash log for troubleshooting, run the collector:
+
+- **macOS:** `./collect-log.sh`
+- **Windows:** double-click `windows/CollectLog.bat`
+
+Either writes `Downloads/skyfactory-crash-log.txt` (newest game log + any crash
+reports + native `hs_err` dumps). Attach that file to an issue.
 The modpack itself (`SkyFactory-1.3.2.mrpack`, ~56 MB) ships as a **GitHub Release**
 asset; the installers download it automatically.
 

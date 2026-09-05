@@ -9,6 +9,9 @@ setlocal
 set "REPO=Ezzybeam/skyfactory-1.3.2-launcher"
 set "PACK_URL=https://github.com/%REPO%/releases/latest/download/SkyFactory-1.3.2.mrpack"
 set "DEST=%USERPROFILE%\Downloads\SkyFactory-1.3.2.mrpack"
+set "LOG=%USERPROFILE%\Downloads\skyfactory-install-log.txt"
+echo [SkyFactory install %date% %time%]> "%LOG%"
+echo Log file: %LOG%
 
 if exist "%DEST%" (
   echo ==^> SkyFactory 1.3.2 UPDATER (Windows / Modrinth)
@@ -20,10 +23,10 @@ echo ==^> Downloading modpack (~56 MB) to your Downloads folder...
 
 where curl >nul 2>&1
 if %errorlevel%==0 (
-  curl -L --fail -o "%DEST%" "%PACK_URL%"
+  curl -L --fail -o "%DEST%" "%PACK_URL%" 2>>"%LOG%"
 ) else (
   echo     curl not found - using PowerShell...
-  powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue';[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;Invoke-WebRequest -Uri '%PACK_URL%' -OutFile '%DEST%'"
+  powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue';[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;Invoke-WebRequest -Uri '%PACK_URL%' -OutFile '%DEST%'" 1>>"%LOG%" 2>&1
 )
 
 REM --- verify the download actually landed (>1 MB) ---
@@ -34,7 +37,7 @@ echo ==^> Saved: %DEST%
 echo ==^> Applying launchwrapper fix to Modrinth's libraries...
 set "LIBDIR=%APPDATA%\ModrinthApp\meta\libraries\net\minecraft\launchwrapper\1.8"
 mkdir "%LIBDIR%" 2>nul
-copy /Y "%~dp0windows\launchwrapper-1.8.jar" "%LIBDIR%\launchwrapper-1.8.jar" >nul
+copy /Y "%~dp0windows\launchwrapper-1.8.jar" "%LIBDIR%\launchwrapper-1.8.jar" >nul 2>>"%LOG%"
 if %errorlevel%==0 (echo     patched launchwrapper installed.) else (echo     ^(not yet - re-run windows\FixLaunch.bat after the first import^))
 
 echo ==^> Opening Modrinth App / the modpack file...
@@ -63,6 +66,11 @@ echo TO UPDATE LATER: just run this installer again - it grabs the newest
 echo   pack. Then re-import the .mrpack in Modrinth (or delete the old
 echo   instance and import the new file) to apply the update.
 echo.
+echo IF IT DOESN'T WORK:
+echo   - This installer's log:  %LOG%
+echo   - Grab the game crash log to share: double-click  windows\CollectLog.bat
+echo     (writes Downloads\skyfactory-crash-log.txt - send that file)
+echo.
 echo NOTE (Windows is WIP): Modrinth may still crash with
 echo   "no lwjgl in java.library.path" -- it does not set the LWJGL native
 echo   path for 1.6.4. If so, see docs\windows.md (Prism fallback). Help wanted!
@@ -75,6 +83,7 @@ echo.
 echo !! Download FAILED (file missing or too small).
 echo    Check your internet connection and try again.
 echo    URL: %PACK_URL%
+echo    Details logged to: %LOG%
 pause
 
 :end

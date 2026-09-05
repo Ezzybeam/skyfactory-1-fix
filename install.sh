@@ -7,6 +7,12 @@ set -euo pipefail
 REPO="Ezzybeam/skyfactory-1.3.2-launcher"
 PACK_URL="https://github.com/$REPO/releases/latest/download/SkyFactory-1.3.2.mrpack"
 DEST="$HOME/Downloads/SkyFactory-1.3.2.mrpack"
+LOG="$HOME/Downloads/skyfactory-install-log.txt"
+
+# Log everything this installer does to a file (and still show it on screen), so
+# if something goes wrong you can share the log.
+exec > >(tee "$LOG") 2>&1
+echo "== log: $LOG =="
 
 if [ -f "$DEST" ]; then
   echo "==> SkyFactory 1.3.2 UPDATER (macOS / Modrinth)"
@@ -57,6 +63,11 @@ LAST STEP (one click) — in Modrinth App:
 
 TO UPDATE LATER: run this installer again — it always fetches the
 newest pack. Then re-import the .mrpack in Modrinth to apply the update.
+
+IF IT DOESN'T WORK:
+  - This installer's log:  $LOG
+  - Grab the game crash log to share:  ./collect-log.sh
+    (writes ~/Downloads/skyfactory-crash-log.txt — send that file)
 
 macOS runs this pack as-is. If it ever crashes with a native error
 (SIGSEGV / hs_err_pid), set the instance's Java to an x86_64 Java 8
