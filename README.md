@@ -35,6 +35,11 @@ Download this repo (green **Code → Download ZIP**, or `git clone`), then doubl
 Not tested yet. It should work through Modrinth (or Prism) the same way macOS does —
 if you get it going, please [open a PR](docs/linux.md).
 
+### Updating 🔄
+Both installers pull from the **latest** release, so **just run the installer again**
+to update — it re-downloads the newest pack and re-applies the fix. Then re-import
+the `.mrpack` in Modrinth to apply it to your instance.
+
 ---
 
 ## What's the actual problem?
