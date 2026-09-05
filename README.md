@@ -8,7 +8,7 @@ running on a modern machine. It's an old pack and today's launchers mishandle it
 | Platform | Status | Installer |
 |----------|--------|-----------|
 | **macOS** | ✅ Working | `install.sh` |
-| **Windows** | 🚧 Work in progress | `install.bat` |
+| **Windows** | ✅ Working (needs `FixModrinth.bat`) | `install.bat` + `FixModrinth.bat` |
 | **Linux** | ❓ Untested (help wanted) | see [`docs/linux.md`](docs/linux.md) |
 
 Uses **Modrinth App** as the launcher. Everything downloads from this repo — no
@@ -26,10 +26,11 @@ Then in Modrinth: **Add Instance → From file →** the downloaded
 `~/Downloads/SkyFactory-1.3.2.mrpack` → **Play**. (Full steps:
 [`docs/mac.md`](docs/mac.md).)
 
-### Windows 🚧
-Download this repo (green **Code → Download ZIP**, or `git clone`), then double-click
-**`install.bat`**. Follow the on-screen steps. Windows/Modrinth is still WIP — see
-[`docs/windows.md`](docs/windows.md) for the current blocker and workaround.
+### Windows ✅
+Download this repo (green **Code → Download ZIP**, or `git clone`), double-click
+**`install.bat`**, then run **`FixModrinth.bat`** and paste the JVM args it prints —
+full steps in [`docs/windows.md`](docs/windows.md). (Works on a real GPU; a VM needs
+software OpenGL.)
 
 ### Linux ❓
 Not tested yet. It should work through Modrinth (or Prism) the same way macOS does —
@@ -58,8 +59,8 @@ them and points the JVM at them with `-Djava.library.path=...`.
   ```
   java.lang.UnsatisfiedLinkError: no lwjgl in java.library.path
   ```
-  That's the open WIP problem. (Prism Launcher fixes it automatically — see
-  [`docs/windows.md`](docs/windows.md) for that route.)
+  Fixed by `FixModrinth.bat` (supplies the missing LWJGL/jInput files + native
+  DLLs). See [`docs/windows.md`](docs/windows.md).
 
 You'll also always see this on 1.6.4 — it is **harmless, ignore it**:
 ```
@@ -75,10 +76,12 @@ install.sh              macOS installer/updater (downloads pack -> opens Modrint
 install.bat             Windows installer/updater (downloads pack + fix -> opens Modrinth)
 collect-log.sh          macOS: bundle the game crash log for sharing
 windows/CollectLog.bat  Windows: bundle the game crash log for sharing
+FixModrinth.bat         Windows: installs the missing LWJGL/jInput libs + native DLLs
+lwjgl-fix/ natives-windows/  the missing 1.6.4 libraries + DLLs used by FixModrinth
 windows/FixLaunch.bat   copies the patched launchwrapper into Modrinth's libraries
 windows/launchwrapper-1.8.jar   patched launchwrapper (fixes a startup crash)
 docs/mac.md             macOS guide
-docs/windows.md         Windows guide + WIP status
+docs/windows.md         Windows guide (working fix)
 docs/linux.md           Linux notes (untested)
 docs/windows-setup-full.txt   the detailed original setup notes
 ```
